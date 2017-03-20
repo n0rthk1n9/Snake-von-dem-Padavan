@@ -3,8 +3,16 @@ function Snake() {
   this.yPosition = 0;
   this.xSpeed = 1;
   this.ySpeed = 0;
+  this.total = 0;
+  this.tail = [];
 
   this.update = function() {
+    for (var i = 0; i < this.total - 1; i++) {
+      this.tail[i] = this.tail[i+1];
+    }
+
+    this.tail[this.total - 1] = createVector(this.xPosition, this.yPosition);
+
     this.xPosition = this.xPosition + this.xSpeed * scl;
     this.yPosition = this.yPosition + this.ySpeed * scl;
 
@@ -20,5 +28,15 @@ function Snake() {
   this.dir = function(x, y) {
     this.xSpeed = x;
     this.ySpeed = y;
+  }
+
+  this.eat = function (positionOfFood) {
+    var distanceToFood = dist(this.xPosition, this.yPosition, positionOfFood.x, positionOfFood.y)
+    if (distanceToFood < 1) {
+      total++;
+      return true;
+    } else {
+        return false;
+    }
   }
 }
